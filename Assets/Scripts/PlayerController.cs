@@ -40,21 +40,20 @@ public class PlayerController : MonoBehaviour
         {
             _collisionCount++;
 
-            // Check if the player has collided three times
+            
             if (_collisionCount >= 3)
             {
-                // Destroy all heart bars and any other game over logic
+               
                 foreach (GameObject heartBar in _heartBars)
                 {
                     Destroy(heartBar);
                 }
                 
-                Debug.Log("Game Over!");
-                // Add any other game over logic here
+                Debug.Log("Game Over!");               
             }
             else
             {
-                // Destroy the corresponding heart bar
+               
                 Destroy(_heartBars[_collisionCount - 1]);
             }
         }
