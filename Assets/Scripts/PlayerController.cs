@@ -9,6 +9,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private FixedJoystick _joystick;
 
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private GameObject[] _heartBars;
+
+    private int _collisionCount = 0;
+
+    private void Start()
+    {
+        // Initialize heart bars
+
+        foreach (GameObject heartBar in _heartBars)
+        {
+            heartBar.SetActive(true);
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -20,4 +33,32 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            _collisionCount++;
+
+            // Check if the player has collided three times
+            if (_collisionCount >= 3)
+            {
+                // Destroy all heart bars and any other game over logic
+                foreach (GameObject heartBar in _heartBars)
+                {
+                    Destroy(heartBar);
+                }
+                
+                Debug.Log("Game Over!");
+                // Add any other game over logic here
+            }
+            else
+            {
+                // Destroy the corresponding heart bar
+                Destroy(_heartBars[_collisionCount - 1]);
+            }
+        }
+    }
+
+
 }
